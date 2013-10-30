@@ -13,6 +13,9 @@ def cursesapp(s):
     # initialize a blank window with a border
     height,width = s.getmaxyx()
     curses.use_default_colors()
+
+    # color pair 1 is the pair that will be used for the border+background
+    # the default for the text itself can be set in text_color_pair
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)
     curses.init_pair(2, curses.COLOR_RED, curses.COLOR_WHITE)
     curses.init_pair(3, curses.COLOR_BLUE, curses.COLOR_BLACK)
@@ -30,7 +33,9 @@ def cursesapp(s):
     y=1
     s.move(y,x)
 
-    text_color_pair = 1
+    # default color pair for text
+    # change on the fly with F9/F10
+    text_color_pair = 3
 
     # setup
     while True:
@@ -59,7 +64,7 @@ def cursesapp(s):
             text_color_pair = (text_color_pair + 1) % 8
 
         elif 255 > c  and 32 <= c :
-            # printable ascii char, emit it with the current colour
+            # printable ascii char, emit it with the current color
             s.attrset(curses.color_pair(text_color_pair))
             s.addstr(y,x,
                 curses.keyname(c)
