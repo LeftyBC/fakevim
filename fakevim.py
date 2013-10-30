@@ -46,7 +46,7 @@ def cursesapp(s):
             y += 1
             x =  1
             s.move(y,x)
-        elif c == 263: # backspace
+        elif c == 263 or c == 127: # backspace
             s.addch(y,x-1,32)
             x -= 1
         elif c == 12:
