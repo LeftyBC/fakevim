@@ -2,7 +2,6 @@ import curses
 import curses.wrapper
 import curses.textpad
 
-
 def initborder(window):
     window.attrset(curses.color_pair(1))
     window.border()
@@ -14,8 +13,11 @@ def cursesapp(s):
     height,width = s.getmaxyx()
     curses.use_default_colors()
 
+    # default color pair for text
+    # change on the fly with F9/F10
+    text_color_pair = 3
+
     # color pair 1 is the pair that will be used for the border+background
-    # the default for the text itself can be set in text_color_pair
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)
     curses.init_pair(2, curses.COLOR_RED, curses.COLOR_WHITE)
     curses.init_pair(3, curses.COLOR_BLUE, curses.COLOR_BLACK)
@@ -25,6 +27,8 @@ def cursesapp(s):
     curses.init_pair(7, curses.COLOR_YELLOW, curses.COLOR_BLACK)
     curses.init_pair(8, curses.COLOR_YELLOW, curses.COLOR_WHITE)
     s.keypad(1)
+
+    # change this number to change the default background pair
     s.bkgd(' ',curses.color_pair(1))
 
     initborder(s)
@@ -33,9 +37,6 @@ def cursesapp(s):
     y=1
     s.move(y,x)
 
-    # default color pair for text
-    # change on the fly with F9/F10
-    text_color_pair = 3
 
     # setup
     while True:
