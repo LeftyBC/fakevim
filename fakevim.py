@@ -2,6 +2,8 @@ import curses
 import curses.wrapper
 import curses.textpad
 
+TABWIDTH = 4
+
 def initborder(window):
     window.attrset(curses.color_pair(1))
     window.border()
@@ -59,6 +61,8 @@ def cursesapp(s):
             x -= 1
         elif c == 261: # right arrow
             x += 1
+	elif c == 9: # tab
+	    x += TABWIDTH
         elif c == 273: # F9
             text_color_pair = (text_color_pair - 1) % 8
         elif c == 274: # F10
@@ -86,8 +90,6 @@ def cursesapp(s):
         s.move(y,x)
         s.attrset(curses.color_pair(0))
         s.refresh()
-
-
-
-curses.wrapper(cursesapp)
+if __name__ == '__main__':
+	curses.wrapper(cursesapp)
 
