@@ -2,6 +2,8 @@ import curses
 import curses.wrapper
 import curses.textpad
 
+# global defaults
+
 _tab_width = 4
 _border_color_pair = 8
 
@@ -9,11 +11,19 @@ _border_color_pair = 8
 # change on the fly with F9/F10
 _text_color_pair = 1
 
+_show_key_names = False
+_show_border = False
+
+# end global defaults
+
 def initborder(window):
     global _border_color_pair
-    window.attrset(curses.color_pair(_border_color_pair))
-    window.border()
-    window.attrset(curses.color_pair(0))
+    global _show_border
+
+    if _show_border == True:
+        window.attrset(curses.color_pair(_border_color_pair))
+        window.border()
+        window.attrset(curses.color_pair(0))
 
 def cursesapp(s):
     global _text_color_pair
@@ -91,7 +101,9 @@ def cursesapp(s):
             y = height - 1
 
         initborder(s)
-        s.addstr(0,1,"Pos: (%d,%d) Key: [%s] (%d) Color: %d" % (y,x,curses.keyname(c),c,_border_color_pair))
+        if _show_key_names == True:
+            s.addstr(0,1,"Pos: (%d,%d) Key: [%s] (%d) Color: %d" % (y,x,curses.keyname(c),c,_border_color_pair))
+
         s.move(y,x)
         s.attrset(curses.color_pair(0))
         s.refresh()
